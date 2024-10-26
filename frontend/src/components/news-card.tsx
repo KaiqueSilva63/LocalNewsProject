@@ -5,17 +5,22 @@ interface Props {
 }
 
 export function NewsCard(props: Props) {
+  const filteredTitle = props.data.title?.slice(0, 70);
+  const filteredDescription = props.data.description?.slice(0, 100);
+
   return (
-    <button className="min-w-[20%] max-w-[20%] min-h-[56.5ch] max-h-[57ch] bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center gap-1">
+    <button className="w-[16%] h-[25rem] bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center gap-1">
       <h3 className="text-zinc-900 text-center font-bold text-lg">
-        {props.data.title}
+        {filteredTitle}
+        {props.data.title.length > 70 && "..."}
       </h3>
-      <img src={props.data.image_url} className="rounded-md p-2 " />
+      <img src={props.data.image_url} className="rounded-md p-2 size-48" />
       <span className="text-left overflow-hidden ">
-        {props.data.description}
+        {filteredDescription}
+        {props.data.description?.length > 100 && "..."}
       </span>
       <a
-        className="underline text-blue-700 align-bottom"
+        className="underline text-blue-700 block top-0"
         href={props.data.link}
         target="_blank"
       >
