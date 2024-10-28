@@ -11,7 +11,6 @@ export function Header() {
         <Link to="/">Home</Link>
         <Link to="/about">Sobre</Link>
         <Link to="contact">Contato</Link>
-        <Link to="register">Cadastro</Link>
       </nav>
     </header>
   );
