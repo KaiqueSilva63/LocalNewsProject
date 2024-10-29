@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function getNews(
   query: string | null | undefined = "",
-  category = ""
+  category: string | null | undefined = ""
 ) {
   let url = `https://newsdata.io/api/1/latest?
   apikey=pub_55432249dc5fc5f8481b0e1fc3423ae02f6e6
