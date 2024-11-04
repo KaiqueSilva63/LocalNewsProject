@@ -10,7 +10,7 @@ export function Header() {
       <nav className="flex items-center gap-3">
         <Link to="/">Home</Link>
         <Link to="/about">Sobre</Link>
-        <Link to="contact">Contato</Link>
+        <Link to="/contact">Contato</Link>
       </nav>
     </header>
   );

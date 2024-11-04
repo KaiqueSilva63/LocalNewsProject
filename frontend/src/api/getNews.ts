@@ -13,7 +13,6 @@ export async function getNews(
   if (query !== "") url += `&q=${query}`;
   if (category !== "") url += `&category=${category}`;
 
-  console.log(url);
   if (url.includes("&q") || url.includes("&category")) {
     const news = await axios.get(url);
     return news.data;

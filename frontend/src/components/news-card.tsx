@@ -1,3 +1,4 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { NewsCardProps } from "../pages/home";
 
 interface Props {
@@ -5,11 +6,26 @@ interface Props {
 }
 
 export function NewsCard(props: Props) {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const filteredTitle = props.data.title?.slice(0, 70);
   const filteredDescription = props.data.description?.slice(0, 100);
 
+  function handleClickNews() {
+    const category = searchParams.get("category");
+    const query = searchParams.get("query");
+    if (category) localStorage.setItem("category", category);
+    if (query) localStorage.setItem("query", query);
+
+    navigate(`/details/${props.data.article_id}`);
+  }
+
   return (
-    <button className="w-[16%] h-[28rem] bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center justify-between gap-1 relative">
+    <button
+      onClick={handleClickNews}
+      className="w-[16%] h-[28rem] bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center justify-between gap-1 relative"
+    >
       <div className="flex flex-col items-center gap-1">
         <h3 className="text-zinc-900 text-center font-bold text-lg">
           {filteredTitle}

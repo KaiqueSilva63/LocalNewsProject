@@ -2,11 +2,11 @@ import { Search } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getNews } from "../api/getNews";
+import { CepModal } from "../components/cep-modal";
+import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { NewsCard } from "../components/news-card";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
-import { CepModal } from "../components/cep-modal";
-import { Footer } from "../components/footer";
 
 export interface NewsCardProps {
   article_id: string;
@@ -34,10 +34,7 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    async function get() {
-      await getNews(search, category).then((res) => setNews(res.results));
-    }
-    get();
+    getNews(search, category).then((res) => setNews(res.results));
   }, [searchParams]);
 
   function updateUrlParams(
