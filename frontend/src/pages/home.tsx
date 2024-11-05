@@ -23,6 +23,7 @@ export function Home() {
   const [category, setCategory] = useState<string | null>(
     searchParams.get("category") || ""
   );
+  const [apiError, setApiError] = useState(false);
 
   const [news, setNews] = useState([]);
 
@@ -34,7 +35,14 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    getNews(search, category).then((res) => setNews(res.results));
+    getNews(search, category)
+      .then((res) => {
+        setApiError(false);
+        setNews(res.results);
+      })
+      .catch(() => {
+        setApiError(true);
+      });
   }, [searchParams]);
 
   function updateUrlParams(
@@ -157,8 +165,14 @@ export function Home() {
             })}
           </div>
         ) : (
-          <p className="mt-6 font-bold text-zinc-900 text-xl">
-            Nenhuma noticia encontrada
+          <p
+            className={`mt-6 font-bold text-xl ${
+              apiError ? "text-red-800" : "text-zinc-900"
+            }`}
+          >
+            {apiError
+              ? "Erro na requisição da API, tente novamente mais tarde"
+              : "Nenhuma noticia encontrada"}
           </p>
         )}
       </main>

@@ -18,7 +18,8 @@ const router = createBrowserRouter([
     element: <Contact />,
   },
   {
-    path: "/details/:articleId",
+    path: "/details/:articleId/:query?/:category?",
+
     element: <Details />,
   },
 ]);
@@ -26,4 +27,3 @@ const router = createBrowserRouter([
 export function App() {
   return <RouterProvider router={router} />;
 }
-
