@@ -13,6 +13,7 @@ export function CepModal() {
   const [cep, setCep] = useState("");
   const [sucessMessage, setSucessMessage] = useState(false);
   const [failMessage, setFailMessage] = useState(false);
+  const [sucessRemove, setSucessRemove] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("cep")) setSucessMessage(true);
@@ -22,6 +23,7 @@ export function CepModal() {
     event.preventDefault();
     if (verifyCep(cep)) {
       setFailMessage(false);
+      setSucessRemove(false);
       await getCep(cep).then((res) =>
         localStorage.setItem("cep", res.data.localidade)
       );
@@ -30,7 +32,16 @@ export function CepModal() {
     } else {
       setSucessMessage(false);
       setFailMessage(true);
+      setSucessRemove(false);
     }
+  }
+
+  function handleRemoveButton() {
+    setFailMessage(false);
+    setSucessMessage(false);
+    setSucessRemove(true);
+    setCep("");
+    localStorage.removeItem("cep");
   }
 
   return (
@@ -67,9 +78,20 @@ export function CepModal() {
           >
             Cadastrar
           </button>
+
+          <button
+            className="flex items-center justify-center bg-red-800 p-1.5 rounded-md"
+            type="button"
+            onClick={handleRemoveButton}
+          >
+            Remover CEP
+          </button>
         </form>
         {sucessMessage && (
           <p className="text-green-800">CEP cadastrado com sucesso</p>
+        )}
+        {sucessRemove && (
+          <p className="text-green-800">CEP removido com sucesso</p>
         )}
         {failMessage && (
           <p className="text-red-800">CEP invalido! Tente novamente</p>

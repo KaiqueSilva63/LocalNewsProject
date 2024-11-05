@@ -10,8 +10,8 @@ export async function getNews(
   &image=1
   &removeduplicate=1`;
 
-  if (query !== "") url += `&q=${query}`;
-  if (category !== "") url += `&category=${category}`;
+  if (query !== "" || query === null) url += `&q=${query}`;
+  if (category !== "" || category === null) url += `&category=${category}`;
 
   if (url.includes("&q") || url.includes("&category")) {
     const news = await axios.get(url);
