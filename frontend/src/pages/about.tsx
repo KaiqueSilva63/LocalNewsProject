@@ -5,7 +5,7 @@ export function About() {
   return (
     <div className="flex items-center flex-col w-full">
       <Header />
-      <section className="flex flex-col items-center justify-center p-10 bg-zinc-300 mt-24 w-[80%] rounded-lg gap-4">
+      <main className="flex flex-col items-center justify-center p-10 bg-zinc-300 mt-24 w-[80%] rounded-lg gap-4">
         <h1 className="font-bold text-xl">Sobre Nós</h1>
         <span>
           Na LocalNews, acreditamos que as notícias mais importantes são aquelas
@@ -54,7 +54,7 @@ export function About() {
             conectamos você ao mundo ao seu redor.
           </span>
         </div>
-      </section>
+      </main>
       <Footer />
     </div>
   );
