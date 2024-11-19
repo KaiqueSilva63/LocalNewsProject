@@ -19,7 +19,9 @@ export interface NewsCardProps {
 export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [search, setSearch] = useState(searchParams.get("query"));
+  const [search, setSearch] = useState<string | null>(
+    searchParams.get("query") || ""
+  );
   const [category, setCategory] = useState<string | null>(
     searchParams.get("category") || ""
   );
@@ -35,14 +37,16 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    getNews(search, category)
-      .then((res) => {
-        setApiError(false);
-        setNews(res.results);
-      })
-      .catch(() => {
-        setApiError(true);
-      });
+    if (search !== "" || category !== "") {
+      getNews(search, category)
+        .then((res) => {
+          setApiError(false);
+          setNews(res.results);
+        })
+        .catch(() => {
+          setApiError(true);
+        });
+    }
   }, [searchParams]);
 
   function updateUrlParams(
@@ -90,6 +94,7 @@ export function Home() {
             placeholder="Pesquise alguma notícia"
             onChange={(event) => setSearch(event.target.value)}
             value={search}
+            autoFocus
           />
           <button className="flex items-center flex-col justify-center ml-[-1.5em]">
             <Search className="text-zinc-800 size-5" />

@@ -10,11 +10,13 @@ export function Details() {
     pubDate: string;
   }
 
-  const { articleId, category, query } = useParams();
+  let { articleId, query, category } = useParams();
 
   const [news, setNews] = useState<AllDataProps>();
 
   useEffect(() => {
+    if (query === "null") query = "";
+    if (category === "null") category = "";
     getNews(query, category).then((res) => {
       const filteredArray = res.results.filter(
         (item: NewsCardProps) => item.article_id === articleId

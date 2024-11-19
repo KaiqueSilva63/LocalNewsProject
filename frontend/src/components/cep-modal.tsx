@@ -14,6 +14,7 @@ export function CepModal() {
   const [sucessMessage, setSucessMessage] = useState(false);
   const [failMessage, setFailMessage] = useState(false);
   const [sucessRemove, setSucessRemove] = useState(false);
+  const [failRemove, setFailRemove] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("cep")) setSucessMessage(true);
@@ -24,24 +25,43 @@ export function CepModal() {
     if (verifyCep(cep)) {
       setFailMessage(false);
       setSucessRemove(false);
-      await getCep(cep).then((res) =>
-        localStorage.setItem("cep", res.data.localidade)
-      );
-      setCep("");
-      setSucessMessage(true);
+      await getCep(cep).then((res) => {
+        if (res.data.localidade === undefined) {
+          setFailMessage(true);
+          setSucessMessage(false);
+          setFailRemove(false);
+          setSucessRemove(false);
+        } else {
+          localStorage.setItem("cep", res.data.localidade);
+          setCep("");
+          setSucessMessage(true);
+          setFailRemove(false);
+        }
+      });
     } else {
       setSucessMessage(false);
       setFailMessage(true);
       setSucessRemove(false);
+      setFailRemove(false);
     }
   }
 
   function handleRemoveButton() {
-    setFailMessage(false);
-    setSucessMessage(false);
-    setSucessRemove(true);
-    setCep("");
-    localStorage.removeItem("cep");
+    if (localStorage.getItem("cep")) {
+      setFailMessage(false);
+      setSucessMessage(false);
+      setSucessRemove(true);
+      setFailRemove(false);
+      setCep("");
+
+      localStorage.removeItem("cep");
+    } else {
+      setFailMessage(false);
+      setSucessMessage(false);
+      setSucessRemove(false);
+      setFailRemove(true);
+      setCep("");
+    }
   }
 
   return (
@@ -95,6 +115,9 @@ export function CepModal() {
         )}
         {failMessage && (
           <p className="text-red-800">CEP invalido! Tente novamente</p>
+        )}
+        {failRemove && (
+          <p className="text-red-800">Não há nenhum CEP cadastrado</p>
         )}
       </div>
     </DialogContent>

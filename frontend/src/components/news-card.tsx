@@ -13,13 +13,10 @@ export function NewsCard(props: Props) {
   const filteredDescription = props.data.description?.slice(0, 100);
 
   function handleClickNews() {
-    let url = `/details/${props.data.article_id}`;
+    const category = searchParams.get("category") || null;
+    const query = searchParams.get("query") || null;
 
-    const category = searchParams.get("category");
-    const query = searchParams.get("query");
-
-    if (category) url += `/${category}`;
-    if (query) url += `/${query}`;
+    let url = `/details/${props.data.article_id}/${query}/${category}`;
 
     navigate(url);
   }

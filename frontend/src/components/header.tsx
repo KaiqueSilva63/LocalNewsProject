@@ -8,9 +8,15 @@ export function Header() {
         <img src={Logo} alt="Logo da página" className="size-16" />
       </Link>
       <nav className="flex items-center gap-3">
-        <Link to="/">Home</Link>
-        <Link to="/about">Sobre</Link>
-        <Link to="/contact">Contato</Link>
+        <Link to="/" className="hover:text-blue-800">
+          Home
+        </Link>
+        <Link to="/about" className="hover:text-blue-800">
+          Sobre
+        </Link>
+        <Link to="/contact" className="hover:text-blue-800">
+          Contato
+        </Link>
       </nav>
     </header>
   );
