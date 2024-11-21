@@ -23,7 +23,7 @@ export function Contact() {
           </div>
         </div>
         <span className="italic font-bold">
-          *Todos os dados acima não são reais*
+          *Todos os dados acima são fictícios*
         </span>
       </main>
       <Footer />

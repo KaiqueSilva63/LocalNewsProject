@@ -11,56 +11,50 @@ import { getCep } from "../api/getCep";
 
 export function CepModal() {
   const [cep, setCep] = useState("");
-  const [sucessMessage, setSucessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
   const [failMessage, setFailMessage] = useState(false);
-  const [sucessRemove, setSucessRemove] = useState(false);
+  const [successRemove, setSuccessRemove] = useState(false);
   const [failRemove, setFailRemove] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("cep")) setSucessMessage(true);
+    if (localStorage.getItem("cep")) setSuccessMessage(true);
   }, []);
+
+  function handleMessage(
+    successMessage: boolean,
+    failMessage: boolean,
+    successRemove: boolean,
+    failRemove: boolean
+  ) {
+    setSuccessMessage(successMessage);
+    setFailMessage(failMessage);
+    setSuccessRemove(successRemove);
+    setFailRemove(failRemove);
+  }
 
   async function handleSubmitCep(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (verifyCep(cep)) {
-      setFailMessage(false);
-      setSucessRemove(false);
       await getCep(cep).then((res) => {
         if (res.data.localidade === undefined) {
-          setFailMessage(true);
-          setSucessMessage(false);
-          setFailRemove(false);
-          setSucessRemove(false);
+          handleMessage(false, true, false, false);
         } else {
           localStorage.setItem("cep", res.data.localidade);
           setCep("");
-          setSucessMessage(true);
-          setFailRemove(false);
+          handleMessage(true, false, false, false);
         }
       });
     } else {
-      setSucessMessage(false);
-      setFailMessage(true);
-      setSucessRemove(false);
-      setFailRemove(false);
+      handleMessage(false, true, false, false);
     }
   }
 
   function handleRemoveButton() {
     if (localStorage.getItem("cep")) {
-      setFailMessage(false);
-      setSucessMessage(false);
-      setSucessRemove(true);
-      setFailRemove(false);
-      setCep("");
-
+      handleMessage(false, false, true, false);
       localStorage.removeItem("cep");
     } else {
-      setFailMessage(false);
-      setSucessMessage(false);
-      setSucessRemove(false);
-      setFailRemove(true);
-      setCep("");
+      handleMessage(false, false, false, true);
     }
   }
 
@@ -107,11 +101,11 @@ export function CepModal() {
             Remover CEP
           </button>
         </form>
-        {sucessMessage && (
-          <p className="text-green-800">CEP cadastrado com sucesso</p>
+        {successMessage && (
+          <p className="text-green-800">CEP cadastrado com successo</p>
         )}
-        {sucessRemove && (
-          <p className="text-green-800">CEP removido com sucesso</p>
+        {successRemove && (
+          <p className="text-green-800">CEP removido com successo</p>
         )}
         {failMessage && (
           <p className="text-red-800">CEP invalido! Tente novamente</p>

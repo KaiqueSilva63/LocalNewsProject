@@ -164,7 +164,7 @@ export function Home() {
         </section>
 
         {news.length > 0 ? (
-          <div className="flex items-center flex-wrap w-full p-4 gap-3 justify-center">
+          <div className="flex items-center flex-wrap w-full p-4 gap-6 justify-center">
             {news.map((item: NewsCardProps) => {
               return <NewsCard data={item} key={item.article_id} />;
             })}

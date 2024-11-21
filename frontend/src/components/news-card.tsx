@@ -24,7 +24,7 @@ export function NewsCard(props: Props) {
   return (
     <button
       onClick={handleClickNews}
-      className="w-[16%] h-[28rem] bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center justify-between gap-1 relative"
+      className="w-[16%] h-[28rem] transition transform bg-zinc-300 p-1 rounded-md shadow-md flex flex-col items-center justify-between gap-1 relative hover:scale-110"
     >
       <div className="flex flex-col items-center gap-1">
         <h3 className="text-zinc-900 text-center font-bold text-lg">
